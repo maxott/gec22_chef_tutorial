@@ -6,3 +6,4 @@ description      'Installs/Configures omf_rc'
 long_description 'Installs/Configures omf_rc'
 version          '0.1.0'
 
+depends          'oml'

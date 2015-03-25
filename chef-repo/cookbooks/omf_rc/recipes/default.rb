@@ -4,6 +4,8 @@
 #
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 
+#package 'oml'
+
 gem_package "omf_rc" do
   action [:remove, :install]
 end
