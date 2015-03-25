@@ -1,5 +1,11 @@
 # Provisioning GENI Resources with Chef
 
+## Objective for this Session
+
+In this session, we want to set up a simple experiment using GENI resources. The experiment is shown below. We'll provision a slice with a single VM inside, configure that node with Chef to contain an OML instrumented VLC player and the OMF resource controller. And finally we will run a simple experiment where we play a DASH video, hosted on a shared, outside the slice, server and record and visaulize some measurements.
+
+![Geni Portal](img/experiment-objective.png) 
+
 ## Install Chef Development Kit
 
 The first step to managing a node remotely is to install the Chef Development Kit (ChefDK) on your workstation. 
