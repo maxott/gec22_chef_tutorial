@@ -1,0 +1,30 @@
+environment: production
+
+communication:
+  url: <%= node["omf"]["frcp"] %>
+
+resources:
+- type: node
+  uid: <%= node["omf"]["uid"] %>
+  membership:
+  - <%= node["omf"]["uid"].split(".")[1..-1].join(".") %>
+
+#instrument: false #true
+
+#instrumentation:
+#  nodeID: <%= node["omf"]["uid"].split(".")[0] %>
+#  domain: <%= node["omf"]["uid"].split(".")[1..-1].join(".") %>
+#  omlCollectUri: <%= node["omf"]["oml_collect_uri"] %>
+
+# Customise resources which can be created by this RC
+factories:
+  load: [
+    'omf_rc/resource_proxy/node',
+    'omf_rc/resource_proxy/net',
+    'omf_rc/resource_proxy/application'
+  ]
+  # Set default value of resource property
+  defaults:
+    node:
+#      topo_file: '/etc/omf_rc/topology'
+#      topo_check_timeout: <%= node["omf"]["topo_check_timeout"] %>
