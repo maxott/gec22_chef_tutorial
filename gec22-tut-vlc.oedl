@@ -1,0 +1,51 @@
+loadOEDL('https://raw.githubusercontent.com/mytestbed/gec_demos_tutorial/master/gec22_demo/vlc-oml.oedl')
+
+defProperty('resource', 'foo', 'ID of a resource')
+defProperty('url', 'http://192.86.139.71/video/bunny_2s/BigBuckBunny_gec22.mpd', 'URL for the video to play')
+defProperty('sampling', 2, 'Measurement sampling frequency (>1)')
+
+defGroup('player', prop.resource) do |group|
+  group.addApplication('vlc') do |app|
+    app.setProperty('input', "#{prop.url}")
+    app.measure('dashRateAdaptation', :samples => prop.sampling.to_i)
+  end
+end
+
+defGroup('cleaner', prop.resource) do |group|
+  group.addApplication('kill_vlc')
+end
+
+onEvent(:ALL_UP) do
+  after 5 do
+    info " ------ Start VLC Application"
+    group("player").startApplications
+  end
+  after 30 do
+    info " ------ Stop VLC Application"
+    group('cleaner').startApplications
+    after 10 do
+      Experiment.done
+    end
+  end
+end
+
+columns = [:oml_ts_client, :oml_sender_id, :empiricalRate_bps_avg, :buffer_percent_avg, :chosenRate_bps_max ]
+
+defGraph 'DashRate1' do |g|
+  g.ms('dashRateAdaptation').select { columns }
+  g.caption "DASH Selected Rate"
+  g.type 'line_chart3'
+  g.mapping :x_axis => :oml_ts_client, :y_axis => :chosenRate_bps_max
+  g.xaxis :legend => 'time [s]'
+  g.yaxis :legend => 'DASH Selected Rate [b]', :ticks => {:format => 's'}
+end
+
+defGraph 'DashRate2' do |g|
+  g.ms('dashRateAdaptation').select { columns }
+  g.caption "DASH Buffer Percentage"
+  g.type 'line_chart3'
+  g.mapping :x_axis => :oml_ts_client, :y_axis => :buffer_percent_avg
+  g.xaxis :legend => 'time [s]'
+  g.yaxis :legend => 'DASH Buffer Percentage [%]', :ticks => {:format => 's'}
+end
+

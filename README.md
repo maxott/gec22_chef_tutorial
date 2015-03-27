@@ -119,7 +119,7 @@ It should contain the following files:
 The only files we need are in the `.chef` directory. Let's go back to the `gec22_chef_tutorial` directory (the git repo you cloned earlier)
 and copy the `.chef` directory into its `chef-repo` directory
  
-	$ cp -r ~/Downloads/chef-repo/.chef chef_repo	
+	$ cp -r ~/Downloads/chef-repo/.chef chef-repo	
 	
 Now let's check if we can contact the previously created Chef Server account. For that we need to cd into the `chef-repo` directory.
 	
